@@ -10,13 +10,12 @@ from typing import Text, Union
 
 import chardet
 import epitran
-from flask import flash, redirect, render_template, request
+from flask import Blueprint, flash, redirect, render_template, request
 from flask.helpers import send_file
 from flask.wrappers import Response
 from werkzeug.utils import secure_filename
 
-from . import main
-
+main = Blueprint("main", __name__, template_folder="templates")
 
 @main.route("/", methods=["GET", "POST"])
 def upload_file() -> Union[Text, Response]:

@@ -6,7 +6,7 @@ import sys
 
 from flask import Flask
 
-from ipaphon.app import main
+from ipaphon.app.ipaphon import main
 from ipaphon.config import read_config
 
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024  # 10 MB
