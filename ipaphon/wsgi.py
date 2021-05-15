@@ -1,3 +1,7 @@
+"""
+The starting point for both 'flask run'
+and any WSGI server that will run the app.
+"""
 import sys
 
 from flask import Flask
@@ -8,7 +12,17 @@ from ipaphon.config import read_config
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024  # 10 MB
 
 
-def create_app():
+def create_app() -> Flask:
+    """
+    Create an instance of the Flask app.
+    The configuration settings get passed to the Flask app
+    and all of the routes are connected via the blueprint.
+
+    Returns
+    -------
+    Flask
+        An instance of a Flask app
+    """
     config = read_config()
     app = Flask(__name__)
     if "secret_key" in config:
@@ -23,7 +37,8 @@ def create_app():
     return app
 
 
-def wsgi():
+def wsgi() -> Flask:
+    """WSGI servers like Waitress can access the app via this function."""
     app = create_app()
     return app
 
