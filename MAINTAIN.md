@@ -1,0 +1,1 @@
+[Epitran](https://github.com/dmort27/epitran/tree/master/epitran) depends on the requests package (see epitran/epitran/download.py)
