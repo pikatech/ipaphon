@@ -24,17 +24,17 @@ def create_app() -> Flask:
         An instance of a Flask app
     """
     config = read_config()
-    app = Flask(__name__)
+    wsgi_app = Flask(__name__)
     if "secret_key" in config:
-        app.secret_key = config["secret_key"]
+        wsgi_app.secret_key = config["secret_key"]
     else:
         print("Secret key missing in configuration file. Exiting.", file=sys.stderr)
         sys.exit(1)
-    app.register_blueprint(main)
+    wsgi_app.register_blueprint(main)
     if "content_limit" in config:
-        app.config["MAX_CONTENT_LENGTH"] = config["content_limit"]
-    app.config["MAX_CONTENT_LENGTH"] = MAX_CONTENT_LENGTH
-    return app
+        wsgi_app.config["MAX_CONTENT_LENGTH"] = config["content_limit"]
+    wsgi_app.config["MAX_CONTENT_LENGTH"] = MAX_CONTENT_LENGTH
+    return wsgi_app
 
 
 def wsgi() -> Flask:
