@@ -1,0 +1,5 @@
+{
+ "secret_key": "change_me",
+ "content_limit": 10485760,
+ "download_folder": "/path/to/tmp/storage"
+}
