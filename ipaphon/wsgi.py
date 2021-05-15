@@ -16,14 +16,6 @@ def create_app():
     else:
         print("Secret key missing in configuration file. Exiting.", file=sys.stderr)
         sys.exit(1)
-    if "download_folder" in config:
-        app.config["DOWNLOAD_FOLDER"] = config["download_folder"]
-    else:
-        print(
-            "Download directory missing in configuration file. Exiting.",
-            file=sys.stderr,
-        )
-        sys.exit(1)
     app.register_blueprint(main)
     if "content_limit" in config:
         app.config["MAX_CONTENT_LENGTH"] = config["content_limit"]

@@ -1,24 +1,12 @@
-import os
+import io
 
 import chardet
 import epitran
-from flask import (
-    flash,
-    redirect,
-    render_template,
-    request,
-    send_from_directory,
-    url_for,
-)
-from flask.globals import current_app
+from flask import flash, redirect, render_template, request
+from flask.helpers import send_file
 from werkzeug.utils import secure_filename
 
 from . import main
-
-
-@main.route("/uploads/<name>")
-def download_file(name):
-    return send_from_directory(current_app.config["DOWNLOAD_FOLDER"], name)
 
 
 @main.route("/", methods=["GET", "POST"])
@@ -39,11 +27,14 @@ def upload_file():
             encoding = chardet.detect(raw_text)
             text = raw_text.decode(encoding["encoding"])
             epi = epitran.Epitran("deu-Latn")
-            ipa = epi.transliterate(text)
-            filename = secure_filename(file.filename + ".ipa")
-            with open(
-                os.path.join(current_app.config["DOWNLOAD_FOLDER"], filename), "wt"
-            ) as ipafile:
-                _ = ipafile.write(ipa)
-            return redirect(url_for("main.download_file", name=filename))
+            # We handle the file transfer in memory,
+            # instead of using a temporary file
+            ipa = io.BytesIO(epi.transliterate(text).encode())
+            ipa.seek(0)
+            return send_file(
+                ipa,
+                mimetype="text/plain",
+                as_attachment=True,
+                attachment_filename=secure_filename(file.filename + ".ipa"),
+            )
     return render_template("index.html")
