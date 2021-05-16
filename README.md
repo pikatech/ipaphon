@@ -20,6 +20,9 @@ flask run
 ## Getting started with web development
 
 https://getbootstrap.com/docs/5.0/getting-started/introduction/
+
 https://getbootstrap.com/docs/5.0/forms/form-control/
+
 https://flask.palletsprojects.com/en/2.0.x/
+
 https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
